@@ -2,10 +2,11 @@
   "name": "js-regex-vue",
   "version": "1.0.0",
   "description": "regex test written by vue",
-  "main": "gulpfile.babel.js",
+  "main": "gui/gui.build.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "webpack": "webpack --config webpack.config.babel.js"
+    "webpack": "webpack --config webpack.config.babel.js",
+    "gui": "electron-packager . js-regex-tester --platform=win32 --arch=x64 --out=gui/build/  --overwrite=true --ignore=node_modules --ignore=.git --ignore=.idea --ignore=gui/build"
   },
   "author": "HyperionD <dongjj81@gmail.com>",
   "license": "MIT",
@@ -18,6 +19,7 @@
     "babel-preset-env": "^1.6.1",
     "babel-register": "^6.26.0",
     "css-loader": "^0.28.7",
+    "electron": "1.7.9",
     "file-loader": "^1.1.5",
     "gulp": "^3.9.1",
     "gulp-rename": "^1.2.2",

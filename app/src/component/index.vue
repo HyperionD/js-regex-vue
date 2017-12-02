@@ -2,11 +2,11 @@
     <div id="index">
         <div id="input_bar">
             <div id="start">/</div>
-            <input v-model="reg_string" size="18px"/>
-            <div id="options" @click="showMenu" ><span>/</span> {{ selected_option }} </div>
+            <input v-model="reg_string" size="18px" placeholder="输入正则"/>
+            <div id="options" @click="showMenu" >/ {{ selected_option }}</div>
         </div>
         <div id="regex">
-            <textarea v-model="text" ></textarea>
+            <textarea v-model="text" placeholder="输入测试文本"></textarea>
             <div id="result" v-html="matchText"></div>
         </div>
         <div v-show="menu" id="option_menu" ref="optionMenu">
@@ -80,7 +80,8 @@
             showMenu: function (e) {
                 this.menu = true;
                 this.$refs.optionMenu.style.top = e.clientY + "px";
-                this.$refs.optionMenu.style.left = e.clientX + "px";
+                this.$refs.optionMenu.style.left = e.clientX - 200 + "px";
+                console.log(this.$refs.optionMenu.clientWidth);
                 e.preventDefault();
             },
             test: function () {
@@ -91,11 +92,13 @@
 </script>
 
 <style lang="less">
-    * {
+    html, body, div {
         margin: 0;
         padding: 0;
     }
-
+    *{
+        box-sizing: border-box;
+    }
     html, body {
         width: 100%;
         height: 100%;
@@ -107,10 +110,11 @@
         align-items: center;
         height: 100%;
         width: 100%;
+        padding: 20px;
 
         #input_bar {
             display: flex;
-            width: 70%;
+            width: 100%;
             margin: 10px;
             border: 1px solid #bdbdbd;
             border-radius: 5px;
@@ -146,7 +150,7 @@
         #regex {
             display: flex;
             flex-grow: 1;
-            width: 70%;
+            width: 100%;
             height: 100%;
             margin: 9px;
 
@@ -164,7 +168,6 @@
                 flex-basis: 50%;
                 flex-grow: 1;
                 border: 1px solid #bdbdbd;
-                overflow-y: auto;
                 height: 100%;
                 margin-left: 5px;
 
@@ -184,6 +187,7 @@
             box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
             background-color: #fff;
             padding: 10px 10px;
+            width: 200px;
 
             div {
                 padding: 10px 10px;

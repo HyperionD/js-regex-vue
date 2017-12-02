@@ -11333,7 +11333,7 @@ exports = module.exports = __webpack_require__(9)(undefined);
 
 
 // module
-exports.push([module.i, "\n* {\n  margin: 0;\n  padding: 0;\n}\nhtml,\nbody {\n  width: 100%;\n  height: 100%;\n}\n#index {\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  height: 100%;\n  width: 100%;\n}\n#index #input_bar {\n  display: flex;\n  width: 70%;\n  margin: 10px;\n  border: 1px solid #bdbdbd;\n  border-radius: 5px;\n  align-items: center;\n  height: 40px;\n  font-size: 18px;\n}\n#index #input_bar #start {\n  color: #bebebe;\n  padding-left: 10px;\n}\n#index #input_bar input {\n  flex-grow: 1;\n  border: none;\n  outline: none;\n  height: 30px;\n  padding: 0 5px;\n  font-size: 18px;\n}\n#index #input_bar #options {\n  color: #bebebe;\n  padding-right: 10px;\n  cursor: pointer;\n}\n#index #input_bar #options span {\n  margin-right: 2px;\n}\n#index #regex {\n  display: flex;\n  flex-grow: 1;\n  width: 70%;\n  height: 100%;\n  margin: 9px;\n}\n#index #regex textarea {\n  flex-basis: 50%;\n  flex-grow: 1;\n  margin-right: 5px;\n  height: 100%;\n  resize: none;\n  border: 1px solid #bdbdbd;\n  outline: none;\n}\n#index #regex #result {\n  flex-basis: 50%;\n  flex-grow: 1;\n  border: 1px solid #bdbdbd;\n  overflow-y: auto;\n  height: 100%;\n  margin-left: 5px;\n}\n#index #regex #result .matched {\n  background-color: #8d9fb0;\n}\n#index #option_menu {\n  display: flex;\n  flex-direction: column;\n  z-index: 1;\n  position: absolute;\n  cursor: pointer;\n  border-radius: 2px;\n  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);\n  background-color: #fff;\n  padding: 10px 10px;\n}\n#index #option_menu div {\n  padding: 10px 10px;\n}\n", ""]);
+exports.push([module.i, "\nhtml,\nbody,\ndiv {\n  margin: 0;\n  padding: 0;\n}\n* {\n  box-sizing: border-box;\n}\nhtml,\nbody {\n  width: 100%;\n  height: 100%;\n}\n#index {\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  height: 100%;\n  width: 100%;\n  padding: 20px;\n}\n#index #input_bar {\n  display: flex;\n  width: 100%;\n  margin: 10px;\n  border: 1px solid #bdbdbd;\n  border-radius: 5px;\n  align-items: center;\n  height: 40px;\n  font-size: 18px;\n}\n#index #input_bar #start {\n  color: #bebebe;\n  padding-left: 10px;\n}\n#index #input_bar input {\n  flex-grow: 1;\n  border: none;\n  outline: none;\n  height: 30px;\n  padding: 0 5px;\n  font-size: 18px;\n}\n#index #input_bar #options {\n  color: #bebebe;\n  padding-right: 10px;\n  cursor: pointer;\n}\n#index #input_bar #options span {\n  margin-right: 2px;\n}\n#index #regex {\n  display: flex;\n  flex-grow: 1;\n  width: 100%;\n  height: 100%;\n  margin: 9px;\n}\n#index #regex textarea {\n  flex-basis: 50%;\n  flex-grow: 1;\n  margin-right: 5px;\n  height: 100%;\n  resize: none;\n  border: 1px solid #bdbdbd;\n  outline: none;\n}\n#index #regex #result {\n  flex-basis: 50%;\n  flex-grow: 1;\n  border: 1px solid #bdbdbd;\n  height: 100%;\n  margin-left: 5px;\n}\n#index #regex #result .matched {\n  background-color: #8d9fb0;\n}\n#index #option_menu {\n  display: flex;\n  flex-direction: column;\n  z-index: 1;\n  position: absolute;\n  cursor: pointer;\n  border-radius: 2px;\n  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);\n  background-color: #fff;\n  padding: 10px 10px;\n  width: 200px;\n}\n#index #option_menu div {\n  padding: 10px 10px;\n}\n", ""]);
 
 // exports
 
@@ -11893,7 +11893,8 @@ exports.default = {
         showMenu: function showMenu(e) {
             this.menu = true;
             this.$refs.optionMenu.style.top = e.clientY + "px";
-            this.$refs.optionMenu.style.left = e.clientX + "px";
+            this.$refs.optionMenu.style.left = e.clientX - 200 + "px";
+            console.log(this.$refs.optionMenu.clientWidth);
             e.preventDefault();
         },
         test: function test() {
@@ -11924,7 +11925,7 @@ var render = function() {
             expression: "reg_string"
           }
         ],
-        attrs: { size: "18px" },
+        attrs: { size: "18px", placeholder: "输入正则" },
         domProps: { value: _vm.reg_string },
         on: {
           input: function($event) {
@@ -11937,8 +11938,7 @@ var render = function() {
       }),
       _vm._v(" "),
       _c("div", { attrs: { id: "options" }, on: { click: _vm.showMenu } }, [
-        _c("span", [_vm._v("/")]),
-        _vm._v(" " + _vm._s(_vm.selected_option) + " ")
+        _vm._v("/ " + _vm._s(_vm.selected_option))
       ])
     ]),
     _vm._v(" "),
@@ -11952,6 +11952,7 @@ var render = function() {
             expression: "text"
           }
         ],
+        attrs: { placeholder: "输入测试文本" },
         domProps: { value: _vm.text },
         on: {
           input: function($event) {
