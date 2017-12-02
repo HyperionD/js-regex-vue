@@ -11333,7 +11333,7 @@ exports = module.exports = __webpack_require__(9)(undefined);
 
 
 // module
-exports.push([module.i, "\n* {\n  margin: 0;\n  padding: 0;\n}\nhtml,\nbody {\n  width: 100%;\n  height: 100%;\n}\n#index {\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  height: 100%;\n}\n#index #input_bar {\n  display: flex;\n  width: 500px;\n  margin: 10px;\n  border: 1px solid #bdbdbd;\n  border-radius: 5px;\n}\n#index #input_bar #start {\n  color: #bebebe;\n  padding-left: 10px;\n}\n#index #input_bar input {\n  flex-grow: 1;\n  border: none;\n  outline: none;\n  height: 30px;\n  padding: 0 5px;\n}\n#index #input_bar #options {\n  color: #bebebe;\n  padding-right: 10px;\n  cursor: pointer;\n}\n#index #input_bar #options span {\n  margin-right: 2px;\n}\n#index textarea {\n  width: 500px;\n  flex-grow: 1;\n  margin: 10px;\n  resize: none;\n}\n#index #option_menu {\n  display: flex;\n  flex-direction: column;\n  z-index: 1;\n  position: absolute;\n  cursor: pointer;\n  border-radius: 2px;\n  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);\n  background-color: #fff;\n  padding: 10px 10px;\n}\n#index #option_menu div {\n  padding: 10px 10px;\n}\n", ""]);
+exports.push([module.i, "\n* {\n  margin: 0;\n  padding: 0;\n}\nhtml,\nbody {\n  width: 100%;\n  height: 100%;\n}\n#index {\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  height: 100%;\n  width: 100%;\n}\n#index #input_bar {\n  display: flex;\n  width: 70%;\n  margin: 10px;\n  border: 1px solid #bdbdbd;\n  border-radius: 5px;\n  align-items: center;\n  height: 40px;\n  font-size: 18px;\n}\n#index #input_bar #start {\n  color: #bebebe;\n  padding-left: 10px;\n}\n#index #input_bar input {\n  flex-grow: 1;\n  border: none;\n  outline: none;\n  height: 30px;\n  padding: 0 5px;\n  font-size: 18px;\n}\n#index #input_bar #options {\n  color: #bebebe;\n  padding-right: 10px;\n  cursor: pointer;\n}\n#index #input_bar #options span {\n  margin-right: 2px;\n}\n#index #regex {\n  display: flex;\n  flex-grow: 1;\n  width: 70%;\n  height: 100%;\n  margin: 9px;\n}\n#index #regex textarea {\n  flex-basis: 50%;\n  flex-grow: 1;\n  margin-right: 5px;\n  height: 100%;\n  resize: none;\n  border: 1px solid #bdbdbd;\n  outline: none;\n}\n#index #regex #result {\n  flex-basis: 50%;\n  flex-grow: 1;\n  border: 1px solid #bdbdbd;\n  overflow-y: auto;\n  height: 100%;\n  margin-left: 5px;\n}\n#index #regex #result .matched {\n  background-color: #8d9fb0;\n}\n#index #option_menu {\n  display: flex;\n  flex-direction: column;\n  z-index: 1;\n  position: absolute;\n  cursor: pointer;\n  border-radius: 2px;\n  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);\n  background-color: #fff;\n  padding: 10px 10px;\n}\n#index #option_menu div {\n  padding: 10px 10px;\n}\n", ""]);
 
 // exports
 
@@ -11807,6 +11807,12 @@ Object.defineProperty(exports, "__esModule", {
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 exports.default = {
     data: function data() {
@@ -11824,7 +11830,9 @@ exports.default = {
                 text: "不区分大小写(i)",
                 selected: false
             }],
-            menu: false
+            menu: false,
+            reg_string: "",
+            text: ""
         };
     },
     mounted: function mounted() {
@@ -11861,6 +11869,18 @@ exports.default = {
             }
 
             return temp_arr.join("");
+        },
+        reg: function reg() {
+            return new RegExp(this.reg_string, this.selected_option);
+        },
+        matchText: function matchText() {
+            if (this.reg_string !== "") {
+                var text_add_tag = this.text.replace(this.reg, function (match) {
+                    return "<span class=\"matched\">" + match + "</span>";
+                });
+
+                return text_add_tag.replace(/[\r\n]/gm, "<br>");
+            }
         }
     },
     methods: {
@@ -11875,6 +11895,9 @@ exports.default = {
             this.$refs.optionMenu.style.top = e.clientY + "px";
             this.$refs.optionMenu.style.left = e.clientX + "px";
             e.preventDefault();
+        },
+        test: function test() {
+            console.log(this.matchText);
         }
     }
 };
@@ -11892,12 +11915,58 @@ var render = function() {
     _c("div", { attrs: { id: "input_bar" } }, [
       _c("div", { attrs: { id: "start" } }, [_vm._v("/")]),
       _vm._v(" "),
-      _c("input"),
+      _c("input", {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.reg_string,
+            expression: "reg_string"
+          }
+        ],
+        attrs: { size: "18px" },
+        domProps: { value: _vm.reg_string },
+        on: {
+          input: function($event) {
+            if ($event.target.composing) {
+              return
+            }
+            _vm.reg_string = $event.target.value
+          }
+        }
+      }),
       _vm._v(" "),
       _c("div", { attrs: { id: "options" }, on: { click: _vm.showMenu } }, [
         _c("span", [_vm._v("/")]),
         _vm._v(" " + _vm._s(_vm.selected_option) + " ")
       ])
+    ]),
+    _vm._v(" "),
+    _c("div", { attrs: { id: "regex" } }, [
+      _c("textarea", {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.text,
+            expression: "text"
+          }
+        ],
+        domProps: { value: _vm.text },
+        on: {
+          input: function($event) {
+            if ($event.target.composing) {
+              return
+            }
+            _vm.text = $event.target.value
+          }
+        }
+      }),
+      _vm._v(" "),
+      _c("div", {
+        attrs: { id: "result" },
+        domProps: { innerHTML: _vm._s(_vm.matchText) }
+      })
     ]),
     _vm._v(" "),
     _c(
@@ -11932,12 +12001,26 @@ var render = function() {
               }
             }
           },
-          [_vm._v(_vm._s(item.text))]
+          [
+            _vm._v("\n            " + _vm._s(item.text) + "\n            "),
+            _c(
+              "span",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: item.selected,
+                    expression: "item.selected"
+                  }
+                ]
+              },
+              [_vm._v("✓")]
+            )
+          ]
         )
       })
-    ),
-    _vm._v(" "),
-    _c("textarea")
+    )
   ])
 }
 var staticRenderFns = []
